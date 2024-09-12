@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "blog_posts",
+  "info": {
+    "singularName": "blog-post",
+    "pluralName": "blog-posts",
+    "displayName": "BlogPost"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "Add the blog title here",
+      "maxLength": 50
+    },
+    "content": {
+      "type": "richtext",
+      "default": "Add blog content here",
+      "required": true
+    },
+    "author": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "required": true,
+      "type": "date",
+      "default": "2024-09-20"
+    },
+    "category": {
+      "type": "string",
+      "required": true,
+      "default": "Add blog category here"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    }
+  }
+}

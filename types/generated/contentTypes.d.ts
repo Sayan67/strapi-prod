@@ -362,26 +362,49 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiPostPost extends Schema.CollectionType {
-  collectionName: 'posts';
+export interface ApiBlogPostBlogPost extends Schema.CollectionType {
+  collectionName: 'blog_posts';
   info: {
-    singularName: 'post';
-    pluralName: 'posts';
-    displayName: 'Post';
+    singularName: 'blog-post';
+    pluralName: 'blog-posts';
+    displayName: 'BlogPost';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
-    description: Attribute.Text;
-    images: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }> &
+      Attribute.DefaultTo<'Add the blog title here'>;
+    content: Attribute.RichText &
+      Attribute.Required &
+      Attribute.DefaultTo<'Add blog content here'>;
+    author: Attribute.String & Attribute.Required;
+    date: Attribute.Date &
+      Attribute.Required &
+      Attribute.DefaultTo<'2024-09-20'>;
+    category: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'Add blog category here'>;
+    image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::post.post', 'oneToOne', 'admin::user'> &
+    createdBy: Attribute.Relation<
+      'api::blog-post.blog-post',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
-    updatedBy: Attribute.Relation<'api::post.post', 'oneToOne', 'admin::user'> &
+    updatedBy: Attribute.Relation<
+      'api::blog-post.blog-post',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -822,7 +845,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::post.post': ApiPostPost;
+      'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
